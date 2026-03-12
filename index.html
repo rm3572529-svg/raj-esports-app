@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="theme-color" content="#E8001E"/>
+<title>Raj Esports — Download App</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Exo+2:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+/* ══ RESET & VARS ══ */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --r:#E8001E;--r2:#C0001A;--r3:#FF3355;
+  --bg:#06000A;--c1:#100010;--c2:#180016;
+  --gold:#FFD060;--grn:#00D96A;
+  --w:#fff;--g6:rgba(255,255,255,.6);--g4:rgba(255,255,255,.4);--g2:rgba(255,255,255,.2);--g1:rgba(255,255,255,.08);
+  --f:'Exo 2',sans-serif;--fh:'Rajdhani',sans-serif;
+  --nh:54px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--f);background:var(--bg);color:var(--w);overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+img{display:block;}
+::-webkit-scrollbar{width:3px;background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--r);border-radius:2px;}
+
+/* ══ PC MODE ══ */
+.pc #pg{max-width:980px;margin:0 auto;border-left:1px solid rgba(255,255,255,.04);border-right:1px solid rgba(255,255,255,.04);}
+.pc #nav{left:50%;transform:translateX(-50%);max-width:980px;}
+.pc .feat-g{grid-template-columns:repeat(3,1fr);}
+.pc .rev-g{grid-template-columns:repeat(3,1fr);}
+.pc .hero-t{font-size:60px;}
+
+/* ══ PRELOADER ══ */
+#pl{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:opacity .6s;}
+#pl.hide{opacity:0;pointer-events:none;}
+.pl-ring{width:80px;height:80px;border-radius:22px;background:linear-gradient(135deg,var(--r),#FF7040);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:38px;font-weight:700;color:#fff;margin-bottom:20px;box-shadow:0 0 60px rgba(232,0,30,.5);animation:plp 1.6s ease infinite;overflow:hidden;}
+.pl-ring img{width:100%;height:100%;object-fit:cover;border-radius:22px;}
+@keyframes plp{0%,100%{box-shadow:0 0 50px rgba(232,0,30,.4);}50%{box-shadow:0 0 100px rgba(232,0,30,.85);}}
+.pl-title{font-family:var(--fh);font-size:24px;font-weight:700;letter-spacing:3px;color:var(--w);}
+.pl-sub{font-size:9px;color:rgba(255,255,255,.3);letter-spacing:5px;text-transform:uppercase;margin-bottom:28px;}
+.pl-bar{width:180px;height:3px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;margin-bottom:5px;}
+.pl-prog{height:100%;width:0;background:linear-gradient(90deg,var(--r),#FF7040);border-radius:2px;transition:width .3s ease;}
+.pl-pct{font-size:9px;color:rgba(255,255,255,.28);font-weight:700;letter-spacing:1px;text-align:right;width:180px;}
+.pl-dots{display:flex;gap:6px;margin-top:18px;}
+.pl-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.15);}
+.pl-dot:nth-child(1){animation:pd .9s infinite 0s;}
+.pl-dot:nth-child(2){animation:pd .9s infinite .15s;}
+.pl-dot:nth-child(3){animation:pd .9s infinite .3s;}
+@keyframes pd{50%{background:var(--r);transform:scale(1.8);box-shadow:0 0 8px var(--r);}}
+
+/* ══ NAV ══ */
+#nav{position:fixed;top:0;left:0;right:0;height:var(--nh);z-index:800;background:rgba(6,0,10,.95);backdrop-filter:blur(18px);border-bottom:1px solid rgba(232,0,30,.1);display:flex;align-items:center;justify-content:space-between;padding:0 14px;gap:8px;}
+.nav-l{display:flex;align-items:center;gap:9px;}
+.nav-ico{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--r),#FF7040);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:15px;font-weight:700;overflow:hidden;flex-shrink:0;}
+.nav-ico img{width:100%;height:100%;object-fit:cover;border-radius:8px;}
+.nav-name{font-family:var(--fh);font-size:15px;font-weight:700;line-height:1;}
+.nav-tag{font-size:8px;color:rgba(232,0,30,.85);letter-spacing:1.5px;text-transform:uppercase;}
+.nav-r{display:flex;align-items:center;gap:7px;}
+#pcBtn{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px 10px;font-size:11px;font-weight:700;color:rgba(255,255,255,.65);cursor:pointer;transition:.2s;white-space:nowrap;}
+#pcBtn:hover{background:rgba(255,255,255,.13);color:var(--w);}
+#pcBtn span{font-size:13px;}
+.nav-dl{background:linear-gradient(135deg,var(--r),var(--r2));color:var(--w);border:none;border-radius:9px;padding:8px 15px;font-size:11.5px;font-weight:800;cursor:pointer;letter-spacing:.3px;transition:.2s;white-space:nowrap;}
+.nav-dl:hover{box-shadow:0 3px 16px rgba(232,0,30,.5);}
+
+/* ══ TICKER ══ */
+.ticker{background:linear-gradient(90deg,var(--r),#FF2244,var(--r));padding:6px 0;overflow:hidden;position:relative;}
+.ticker-lbl{position:absolute;left:0;top:0;bottom:0;background:rgba(0,0,0,.3);display:flex;align-items:center;padding:0 10px;font-size:9px;font-weight:800;letter-spacing:1px;z-index:2;border-right:1px solid rgba(255,255,255,.15);}
+.ticker-txt{white-space:nowrap;font-size:10.5px;font-weight:600;letter-spacing:.3px;animation:tick 30s linear infinite;padding-left:80px;}
+@keyframes tick{from{transform:translateX(100vw);}to{transform:translateX(-100%);}}
+
+/* ══ HERO ══ */
+#hero{padding-top:calc(var(--nh) + 44px);padding-bottom:50px;padding-left:16px;padding-right:16px;position:relative;overflow:hidden;text-align:center;}
+.hero-bg1{position:absolute;inset:0;background:radial-gradient(ellipse 100% 60% at 50% 10%,rgba(232,0,30,.14) 0%,transparent 70%);}
+.hero-bg2{position:absolute;inset:0;background-image:linear-gradient(rgba(232,0,30,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(232,0,30,.03) 1px,transparent 1px);background-size:34px 34px;mask-image:radial-gradient(ellipse at center,black 20%,transparent 72%);}
+.hero-in{position:relative;z-index:2;max-width:580px;margin:0 auto;}
+.live-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(232,0,30,.1);border:1px solid rgba(232,0,30,.28);border-radius:20px;padding:4px 13px;font-size:9.5px;font-weight:700;color:rgba(255,100,100,.9);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--r);animation:bl 1.2s infinite;}
+@keyframes bl{50%{opacity:.2;}}
+.hero-logo{width:88px;height:88px;border-radius:22px;background:linear-gradient(135deg,var(--r),#FF7040);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:40px;font-weight:700;margin:0 auto 16px;box-shadow:0 0 55px rgba(232,0,30,.4);overflow:hidden;animation:lp 2.5s ease infinite;}
+@keyframes lp{50%{box-shadow:0 0 90px rgba(232,0,30,.75);}}
+.hero-logo img{width:100%;height:100%;object-fit:cover;border-radius:22px;}
+.hero-t{font-family:var(--fh);font-size:clamp(34px,9vw,58px);font-weight:700;line-height:1.02;margin-bottom:5px;}
+.hero-t span{color:var(--r);text-shadow:0 0 24px rgba(232,0,30,.4);}
+.hero-s{font-size:13.5px;color:rgba(255,255,255,.55);line-height:1.65;margin-bottom:22px;max-width:440px;margin-left:auto;margin-right:auto;}
+.hero-stats{display:flex;align-items:stretch;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:13px;overflow:hidden;max-width:380px;margin:0 auto 22px;}
+.hs{flex:1;padding:12px 6px;text-align:center;border-right:1px solid rgba(255,255,255,.05);}
+.hs:last-child{border-right:none;}
+.hs-v{font-family:var(--fh);font-size:21px;font-weight:700;}
+.hs-l{font-size:8.5px;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:.7px;margin-top:2px;}
+.rc{color:var(--r);}.gc{color:var(--gold);}.grc{color:var(--grn);}
+.dl-box{margin-bottom:18px;}
+.dl-btn{display:flex;align-items:center;justify-content:center;gap:11px;background:linear-gradient(135deg,var(--r) 0%,#C80018 100%);color:var(--w);border-radius:16px;padding:15px 26px;font-size:16px;font-weight:800;letter-spacing:.2px;box-shadow:0 6px 26px rgba(232,0,30,.42),0 2px 8px rgba(0,0,0,.4);transition:.25s;max-width:300px;margin:0 auto;position:relative;overflow:hidden;cursor:pointer;}
+.dl-btn::before{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);animation:shine 2.8s ease infinite;}
+@keyframes shine{0%{left:-100%;}60%,100%{left:150%;}}
+.dl-btn:hover{transform:translateY(-3px);box-shadow:0 12px 38px rgba(232,0,30,.62);}
+.dl-btn:active{transform:translateY(0);}
+.dl-ico{font-size:26px;}
+.dl-t{text-align:left;}
+.dl-sm{font-size:9.5px;opacity:.75;font-weight:500;}
+.dl-lg{font-size:19px;font-weight:900;line-height:1.05;}
+.dl-meta{display:flex;justify-content:center;gap:14px;font-size:10.5px;color:rgba(255,255,255,.38);margin-top:7px;flex-wrap:wrap;}
+.rat-strip{display:flex;align-items:center;justify-content:center;gap:20px;background:rgba(232,0,30,.06);border:1px solid rgba(232,0,30,.14);border-radius:12px;padding:11px 16px;max-width:400px;margin:0 auto;flex-wrap:wrap;}
+.rs{text-align:center;}
+.rs-v{font-family:var(--fh);font-size:21px;font-weight:700;}
+.rs-s{display:flex;gap:1px;justify-content:center;margin:2px 0;}
+.rs-s i{color:var(--gold);font-style:normal;font-size:11px;}
+.rs-l{font-size:8.5px;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:.8px;}
+.info-bar{background:rgba(232,0,30,.045);border-top:1px solid rgba(232,0,30,.09);border-bottom:1px solid rgba(232,0,30,.07);padding:9px 14px;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;}
+.ib{display:flex;align-items:center;gap:4px;font-size:10.5px;color:rgba(255,255,255,.42);}
+.ib b{color:rgba(255,255,255,.72);}
+.ibd{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.13);}
+
+/* ══ SECTION BASE ══ */
+.sec{padding:46px 16px;}
+.sec-hd{font-family:var(--fh);font-size:clamp(22px,5.5vw,34px);font-weight:700;text-align:center;margin-bottom:5px;}
+.sec-hd span{color:var(--r);}
+.sec-sd{text-align:center;color:rgba(255,255,255,.42);font-size:12.5px;margin-bottom:7px;max-width:420px;margin-left:auto;margin-right:auto;}
+.sec-line{width:46px;height:3px;background:var(--r);border-radius:2px;margin:8px auto 32px;}
+
+/* ══ FEATURES ══ */
+.feat-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:11px;max-width:900px;margin:0 auto;}
+.feat{background:rgba(24,0,22,.85);border:1.5px solid rgba(232,0,30,.1);border-radius:13px;padding:17px;position:relative;overflow:hidden;transition:.22s;}
+.feat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--r),transparent);transform:scaleX(0);transition:.28s;}
+.feat:hover{border-color:rgba(232,0,30,.32);transform:translateY(-3px);}
+.feat:hover::before{transform:scaleX(1);}
+.feat-ic{font-size:30px;margin-bottom:9px;}
+.feat-t{font-family:var(--fh);font-size:16px;font-weight:700;margin-bottom:5px;}
+.feat-d{font-size:12px;color:rgba(255,255,255,.5);line-height:1.62;}
+
+/* ══ SCREENSHOTS ══ */
+.ss-scr{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:12px;}
+.ss-scr::-webkit-scrollbar{height:3px;background:rgba(255,255,255,.05);}
+.ss-scr::-webkit-scrollbar-thumb{background:var(--r);border-radius:2px;}
+.ss-row{display:flex;gap:11px;width:max-content;padding:3px 3px 3px;}
+.ss-card{width:178px;height:350px;border-radius:17px;overflow:hidden;border:2px solid rgba(232,0,30,.16);position:relative;cursor:pointer;flex-shrink:0;transition:.24s;}
+.ss-card:hover{transform:scale(1.04);border-color:rgba(232,0,30,.5);box-shadow:0 8px 28px rgba(232,0,30,.18);}
+.ss-num{position:absolute;top:8px;left:8px;background:var(--r);color:#fff;border-radius:6px;padding:2px 7px;font-size:8.5px;font-weight:700;z-index:3;}
+.ss-lbl{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.86));padding:14px 9px 8px;font-size:10.5px;font-weight:700;text-align:center;color:rgba(255,255,255,.82);}
+.bg-s1{background:linear-gradient(160deg,#0c0014,#1a0010);}
+.bg-s2{background:linear-gradient(160deg,#000c1a,#001830);}
+.bg-s3{background:linear-gradient(160deg,#090f00,#0d1800);}
+.bg-s4{background:linear-gradient(160deg,#110008,#1e0010);}
+.bg-s5{background:linear-gradient(160deg,#0c0c13,#190800);}
+.bg-s6{background:linear-gradient(160deg,#070018,#12002c);}
+.sm{width:100%;height:100%;padding:9px 8px;display:flex;flex-direction:column;gap:5px;font-size:9px;}
+.sm-bar{height:19px;border-radius:5px;background:rgba(255,255,255,.07);display:flex;align-items:center;padding:0 7px;gap:4px;flex-shrink:0;}
+.sm-card{border-radius:9px;padding:8px;}
+.sm-line{height:5px;border-radius:3px;background:rgba(255,255,255,.14);margin-bottom:3px;}
+.sm-btn{height:25px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:10px;font-weight:700;margin-top:auto;flex-shrink:0;}
+
+/* ══ VIDEO ══ */
+.vid-wrap{max-width:620px;margin:0 auto;border-radius:17px;overflow:hidden;border:2px solid rgba(232,0,30,.18);box-shadow:0 0 48px rgba(232,0,30,.1);}
+.vid-ph{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#0c0014,#1a0010);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;}
+.vid-ph::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(232,0,30,.1),transparent 70%);}
+.vid-play{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--r),var(--r2));border:none;color:#fff;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 32px rgba(232,0,30,.5);transition:.24s;position:relative;z-index:2;cursor:pointer;}
+.vid-play:hover{transform:scale(1.12);box-shadow:0 0 56px rgba(232,0,30,.85);}
+.vid-ov{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.78));padding:16px;text-align:center;z-index:2;}
+.vid-ov-t{font-family:var(--fh);font-size:14px;font-weight:700;}
+.vid-ov-s{font-size:10px;color:rgba(255,255,255,.42);margin-top:2px;}
+.vid-fr{display:none;width:100%;aspect-ratio:16/9;}
+.vid-fr iframe{width:100%;height:100%;border:none;}
+.url-row{display:flex;gap:8px;max-width:620px;margin:11px auto 0;flex-wrap:wrap;}
+.url-row input{flex:1;min-width:160px;padding:9px 12px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.09);border-radius:9px;color:var(--w);font-size:12px;font-family:var(--f);outline:none;}
+.url-row input:focus{border-color:var(--r);}
+.url-row button{padding:9px 15px;background:var(--r);color:var(--w);border:none;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:var(--f);}
+.vid-note{text-align:center;font-size:10px;color:rgba(255,255,255,.22);margin-top:5px;}
+
+/* ══ REVIEWS ══ */
+.rat-sum{display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:center;background:rgba(24,0,22,.8);border:1.5px solid rgba(232,0,30,.12);border-radius:13px;padding:16px;max-width:380px;margin:0 auto 26px;}
+.rat-big{text-align:center;}
+.rat-big-n{font-family:var(--fh);font-size:50px;font-weight:700;line-height:1;}
+.rat-big-st{display:flex;gap:2px;justify-content:center;margin:3px 0;}
+.rat-big-st i{color:var(--gold);font-style:normal;font-size:15px;}
+.rat-big-c{font-size:9.5px;color:rgba(255,255,255,.32);}
+.rat-bars{flex:1;min-width:150px;}
+.rb-row{display:flex;align-items:center;gap:5px;margin-bottom:4px;}
+.rb-l{font-size:9.5px;color:rgba(255,255,255,.42);width:10px;text-align:right;}
+.rb-tr{flex:1;height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden;}
+.rb-fi{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold),var(--r));}
+.rb-c{font-size:9px;color:rgba(255,255,255,.28);width:24px;}
+.rev-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:11px;max-width:900px;margin:0 auto;}
+.rev{background:rgba(24,0,22,.85);border:1.5px solid rgba(255,255,255,.055);border-radius:12px;padding:15px;transition:.2s;}
+.rev:hover{border-color:rgba(232,0,30,.2);}
+.rev-top{display:flex;align-items:center;gap:9px;margin-bottom:9px;}
+.rev-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:16px;font-weight:700;flex-shrink:0;}
+.rev-nm{font-weight:700;font-size:12.5px;}
+.rev-dt{font-size:9.5px;color:rgba(255,255,255,.3);margin-top:1px;}
+.rev-st{display:flex;gap:1px;margin-top:2px;}
+.rev-st i{color:var(--gold);font-style:normal;font-size:10.5px;}
+.rev-tag{background:rgba(0,217,106,.11);color:var(--grn);font-size:7.5px;font-weight:700;padding:2px 7px;border-radius:9px;margin-left:auto;white-space:nowrap;}
+.rev-txt{font-size:12px;color:rgba(255,255,255,.6);line-height:1.6;}
+.rev-ver{font-size:9.5px;color:var(--grn);margin-top:7px;font-weight:600;}
+.rev-lk{font-size:9.5px;color:rgba(255,255,255,.28);margin-top:3px;}
+
+/* ══ STEPS ══ */
+.steps{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:10px;}
+.step{display:flex;align-items:flex-start;gap:13px;background:rgba(24,0,22,.8);border:1.5px solid rgba(232,0,30,.08);border-radius:12px;padding:14px;transition:.2s;}
+.step:hover{border-color:rgba(232,0,30,.25);}
+.step-n{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--r),var(--r2));display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:17px;font-weight:700;flex-shrink:0;box-shadow:0 0 16px rgba(232,0,30,.28);}
+.step-t{font-family:var(--fh);font-size:14.5px;font-weight:700;margin-bottom:4px;}
+.step-d{font-size:12px;color:rgba(255,255,255,.5);line-height:1.62;}
+.step-code{background:rgba(232,0,30,.08);border:1px solid rgba(232,0,30,.2);border-radius:5px;padding:2px 9px;font-size:10.5px;color:rgba(255,140,140,.85);margin-top:5px;display:inline-block;}
+
+/* ══ PERMS ══ */
+.perms{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:7px;max-width:620px;margin:0 auto;}
+.perm{display:flex;align-items:center;gap:8px;background:rgba(24,0,22,.7);border:1px solid rgba(255,255,255,.05);border-radius:9px;padding:9px 11px;font-size:11.5px;color:rgba(255,255,255,.58);}
+.perm span{font-size:17px;width:22px;text-align:center;}
+
+/* ══ FAQ ══ */
+.faq{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:7px;}
+.fq{background:rgba(24,0,22,.8);border:1.5px solid rgba(255,255,255,.055);border-radius:11px;overflow:hidden;}
+.fq-q{display:flex;align-items:center;justify-content:space-between;padding:13px 15px;cursor:pointer;font-weight:700;font-size:12.5px;gap:9px;}
+.fq-q:hover{background:rgba(232,0,30,.05);}
+.fq-ar{font-size:11px;color:var(--r);flex-shrink:0;transition:.24s;}
+.fq.op .fq-ar{transform:rotate(180deg);}
+.fq-a{display:none;padding:0 15px 13px;font-size:12px;color:rgba(255,255,255,.5);line-height:1.72;}
+.fq.op .fq-a{display:block;}
+
+/* ══ TERMS ══ */
+.terms{background:rgba(24,0,22,.8);border:1.5px solid rgba(232,0,30,.1);border-radius:13px;padding:17px;font-size:12px;color:rgba(255,255,255,.5);line-height:1.82;max-width:780px;margin:0 auto;}
+.terms p{margin-bottom:5px;}
+
+/* ══ CTA ══ */
+#cta{padding:58px 16px;text-align:center;position:relative;overflow:hidden;}
+#cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 75% 55% at 50% 50%,rgba(232,0,30,.09) 0%,transparent 70%);}
+.cta-in{position:relative;z-index:2;}
+.cta-t{font-family:var(--fh);font-size:clamp(26px,6.5vw,46px);font-weight:700;margin-bottom:9px;line-height:1.08;}
+.cta-s{font-size:13.5px;color:rgba(255,255,255,.48);margin-bottom:26px;max-width:400px;margin-left:auto;margin-right:auto;}
+.cta-btns{display:flex;align-items:center;justify-content:center;gap:11px;flex-wrap:wrap;}
+.cta-apk{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--r),var(--r2));color:var(--w);border-radius:13px;padding:13px 24px;font-size:14px;font-weight:800;box-shadow:0 5px 24px rgba(232,0,30,.38);transition:.24s;}
+.cta-apk:hover{transform:translateY(-2px);box-shadow:0 9px 36px rgba(232,0,30,.58);}
+.cta-web{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);color:var(--w);border:1.5px solid rgba(255,255,255,.12);border-radius:13px;padding:13px 20px;font-size:13px;font-weight:700;transition:.24s;}
+.cta-web:hover{background:rgba(255,255,255,.11);}
+.cta-note{font-size:10px;color:rgba(255,255,255,.2);margin-top:12px;}
+
+/* ══ FOOTER ══ */
+footer{background:rgba(4,0,7,1);border-top:1px solid rgba(255,255,255,.04);padding:32px 16px 22px;}
+.ft-wrap{max-width:860px;margin:0 auto;}
+.ft-top{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px;}
+.ft-brand{flex:1;min-width:190px;max-width:240px;}
+.ft-brand-logo{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
+.ft-brand-ico{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--r),#FF7040);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:15px;font-weight:700;overflow:hidden;}
+.ft-brand-ico img{width:100%;height:100%;object-fit:cover;border-radius:8px;}
+.ft-brand-name{font-family:var(--fh);font-size:15px;font-weight:700;}
+.ft-brand-desc{font-size:11px;color:rgba(255,255,255,.32);line-height:1.65;}
+.ft-col{flex:1;min-width:110px;}
+.ft-col h4{font-family:var(--fh);font-size:11.5px;font-weight:700;color:rgba(255,255,255,.65);margin-bottom:9px;text-transform:uppercase;letter-spacing:.9px;}
+.ft-col a{display:block;font-size:11.5px;color:rgba(255,255,255,.35);margin-bottom:6px;transition:.15s;}
+.ft-col a:hover{color:var(--r);}
+.ft-bot{border-top:1px solid rgba(255,255,255,.04);padding-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px;}
+.ft-copy{font-size:10.5px;color:rgba(255,255,255,.22);line-height:1.7;}
+.ft-bdgs{display:flex;gap:6px;flex-wrap:wrap;}
+.ftbdg{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:6px;padding:3px 8px;font-size:9.5px;color:rgba(255,255,255,.32);font-weight:600;}
+
+/* ══ TOAST ══ */
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(8px);z-index:9999;background:rgba(18,0,16,.97);border:1.5px solid rgba(232,0,30,.4);border-radius:10px;padding:9px 16px;font-size:12.5px;font-weight:600;color:var(--w);opacity:0;transition:.28s;pointer-events:none;white-space:nowrap;max-width:90vw;text-align:center;}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
+#toast.ok{border-color:rgba(0,217,106,.4);color:var(--grn);}
+
+/* ══ SS MODAL ══ */
+#ssm{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;padding:14px;}
+#ssm.on{display:flex;}
+#ssm-box{background:var(--c2);border-radius:17px;padding:22px;max-width:320px;width:100%;text-align:center;position:relative;}
+#ssm-x{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.08);border:none;color:var(--w);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;}
+
+/* ══ SCROLL REVEAL ══ */
+.sr{opacity:0;transform:translateY(16px);transition:opacity .52s ease,transform .52s ease;}
+.sr.vis{opacity:1;transform:none;}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:420px){
+  .hero-stats{max-width:100%;}
+  .rat-strip{gap:12px;}
+  .cta-btns{flex-direction:column;align-items:stretch;max-width:260px;margin:0 auto;}
+  .cta-apk,.cta-web{justify-content:center;}
+  .ft-top{flex-direction:column;}
+  .info-bar{gap:10px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ PRELOADER ══ -->
+<div id="pl">
+  <div class="pl-ring"><img src="logo.png" alt="R" onerror="this.style.display='none';this.parentElement.textContent='R'"/></div>
+  <div class="pl-title">RAJ ESPORTS</div>
+  <div class="pl-sub">Loading...</div>
+  <div class="pl-bar"><div class="pl-prog" id="pp"></div></div>
+  <div class="pl-pct" id="ppt">0%</div>
+  <div class="pl-dots"><div class="pl-dot"></div><div class="pl-dot"></div><div class="pl-dot"></div></div>
+</div>
+
+<!-- ══ NAVBAR ══ -->
+<nav id="nav">
+  <div class="nav-l">
+    <div class="nav-ico"><img src="logo.png" alt="R" onerror="this.style.display='none';this.parentElement.textContent='R'"/></div>
+    <div><div class="nav-name">Raj Esports</div><div class="nav-tag">Tournament App</div></div>
+  </div>
+  <div class="nav-r">
+    <button id="pcBtn" onclick="togPC()">
+      <span id="pcIco">🖥️</span>
+      <span id="pcLbl">PC View</span>
+    </button>
+    <button class="nav-dl" onclick="triggerDownload()">📥 Download</button>
+  </div>
+</nav>
+
+<div id="pg">
+
+<!-- ══ TICKER ══ -->
+<div class="ticker" style="margin-top:54px;">
+  <span class="ticker-lbl">🔴 LIVE</span>
+  <span class="ticker-txt">🏆 Raj Esports Tournament App — Download Now &amp; Win Real Cash! ⚡ Free Fire Daily Tournaments · Solo · Duo · Squad · Min Level 30 · Real Money UPI Prizes 💰 · 1000+ Players Joined · 100% Safe &amp; Free to Download 🛡️ · New Tournament Every Day!</span>
+</div>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-bg1"></div>
+  <div class="hero-bg2"></div>
+  <div class="hero-in">
+    <div class="live-badge sr"><span class="live-dot"></span>Official Download Page</div>
+    <div class="hero-logo sr"><img src="logo.png" alt="R" onerror="this.style.display='none';this.parentElement.textContent='R'"/></div>
+    <h1 class="hero-t sr">RAJ ESPORTS<br/><span>TOURNAMENT</span></h1>
+    <p class="hero-s sr">India's Best Free Fire Tournament Platform. Join daily competitions, compete with top players, and win real cash to your UPI! 🏆</p>
+
+    <div class="hero-stats sr">
+      <div class="hs"><div class="hs-v rc">1K+</div><div class="hs-l">Downloads</div></div>
+      <div class="hs"><div class="hs-v gc">4.3★</div><div class="hs-l">Rating</div></div>
+      <div class="hs"><div class="hs-v grc">₹50K+</div><div class="hs-l">Prize Paid</div></div>
+      <div class="hs"><div class="hs-v">Daily</div><div class="hs-l">Tournaments</div></div>
+    </div>
+
+    <div class="dl-box sr">
+      <a class="dl-btn" href="YOUR_APK_DIRECT_DOWNLOAD_LINK_HERE" id="mainDL" onclick="apkClick(event)">
+        <span class="dl-ico">📥</span>
+        <div class="dl-t">
+          <div class="dl-sm">FREE DOWNLOAD — ANDROID</div>
+          <div class="dl-lg">Download APK</div>
+        </div>
+      </a>
+      <div class="dl-meta">
+        <span>📦 v2.5</span>
+        <span>⚡ ~18 MB</span>
+        <span>🤖 Android 5.0+</span>
+        <span>💯 Free</span>
+      </div>
+    </div>
+
+    <div class="rat-strip sr">
+      <div class="rs"><div class="rs-v" style="color:var(--gold)">4.3</div><div class="rs-s"><i>★</i><i>★</i><i>★</i><i>★</i><i style="opacity:.35">★</i></div><div class="rs-l">Rating</div></div>
+      <div class="rs"><div class="rs-v rc">1K+</div><div class="rs-l">Downloads</div></div>
+      <div class="rs"><div class="rs-v grc">500+</div><div class="rs-l">Reviews</div></div>
+      <div class="rs"><div class="rs-v">Safe</div><div class="rs-l">100% Verified</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INFO BAR ══ -->
+<div class="info-bar">
+  <div class="ib">📦 <b>APK:</b> com.rajesports.app</div>
+  <div class="ibd"></div>
+  <div class="ib">📅 <b>Mar 2025</b></div>
+  <div class="ibd"></div>
+  <div class="ib">🤖 <b>Android 5.0+</b></div>
+  <div class="ibd"></div>
+  <div class="ib">💳 <b>FREE</b></div>
+  <div class="ibd"></div>
+  <div class="ib">🌐 rajesports.in</div>
+</div>
+
+<!-- ══ FEATURES ══ -->
+<section class="sec">
+  <h2 class="sec-hd sr">App <span>Features</span></h2>
+  <p class="sec-sd sr">Everything you need to compete and win real cash daily</p>
+  <div class="sec-line"></div>
+  <div class="feat-g">
+    <div class="feat sr"><div class="feat-ic">🏆</div><div class="feat-t">Daily Tournaments</div><div class="feat-d">Solo, Duo &amp; Squad every day. Join from ₹10 entry and win up to ₹5,000+ per match!</div></div>
+    <div class="feat sr"><div class="feat-ic">💰</div><div class="feat-t">Instant UPI Payout</div><div class="feat-d">Win real cash → wallet → UPI withdrawal in minutes. No fake prizes!</div></div>
+    <div class="feat sr"><div class="feat-ic">🎮</div><div class="feat-t">Live Room System</div><div class="feat-d">Room ID &amp; Password appear in-app when match starts. No WhatsApp chaos!</div></div>
+    <div class="feat sr"><div class="feat-ic">📊</div><div class="feat-t">Live Leaderboard</div><div class="feat-d">Real-time rankings, kill counts, earnings and match history. Be #1 in India!</div></div>
+    <div class="feat sr"><div class="feat-ic">⭐</div><div class="feat-t">VIP Membership</div><div class="feat-d">Exclusive VIP tournaments, higher prizes, priority support and member badges!</div></div>
+    <div class="feat sr"><div class="feat-ic">🎁</div><div class="feat-t">Redeem Codes</div><div class="feat-d">Free wallet cash via redeem codes during events, festivals and special days!</div></div>
+    <div class="feat sr"><div class="feat-ic">🔗</div><div class="feat-t">Referral Earn ₹2</div><div class="feat-d">Invite friends → earn ₹2 each join karne pe. Unlimited referrals. Build passive income!</div></div>
+    <div class="feat sr"><div class="feat-ic">🎫</div><div class="feat-t">24/7 Support</div><div class="feat-d">In-app tickets, live chat &amp; WhatsApp. Fast replies for any issue!</div></div>
+    <div class="feat sr"><div class="feat-ic">🚨</div><div class="feat-t">Anti-Cheat System</div><div class="feat-d">Report hackers directly. Zero tolerance → instant permanent ban!</div></div>
+  </div>
+</section>
+
+<!-- ══ SCREENSHOTS ══ -->
+<section class="sec" style="padding-top:0">
+  <h2 class="sec-hd sr">App <span>Screenshots</span></h2>
+  <p class="sec-sd sr">6 real screens — swipe to see more →</p>
+  <div class="sec-line"></div>
+  <div class="ss-scr sr">
+    <div class="ss-row">
+
+      <!-- S1 Home -->
+      <div class="ss-card bg-s1" onclick="openSS('🏠 Home Screen')">
+        <div class="ss-num">1/6</div>
+        <div class="sm">
+          <div class="sm-bar"><div style="width:7px;height:7px;border-radius:50%;background:var(--r)"></div><div style="flex:1;height:6px;border-radius:3px;background:rgba(255,255,255,.14)"></div></div>
+          <div style="text-align:center;padding:4px 0"><div style="font-family:var(--fh);font-size:12px;font-weight:700;color:var(--r)">RAJ ESPORTS</div><div style="font-size:8px;color:rgba(255,255,255,.3);letter-spacing:2px">TOURNAMENT</div></div>
+          <div class="sm-card" style="background:linear-gradient(135deg,rgba(232,0,30,.17),rgba(232,0,30,.04));border:1px solid rgba(232,0,30,.18)">
+            <div style="font-size:8px;color:rgba(255,255,255,.38)">Wallet Balance</div>
+            <div style="font-family:var(--fh);font-size:20px;font-weight:700;color:var(--gold)">₹ 250.00</div>
+            <div style="display:flex;gap:4px;margin-top:5px"><div style="flex:1;background:var(--r);border-radius:5px;padding:4px;text-align:center;font-size:8.5px;font-weight:700">+ Add</div><div style="flex:1;background:rgba(255,255,255,.1);border-radius:5px;padding:4px;text-align:center;font-size:8.5px">Withdraw</div></div>
+          </div>
+          <div style="font-family:var(--fh);font-size:11px;font-weight:700;margin-bottom:3px">🏆 Tournaments</div>
+          <div style="background:rgba(255,255,255,.05);border-radius:7px;padding:6px;margin-bottom:3px"><div style="font-size:8.5px;font-weight:700">⚡ Solo Blitz #24</div><div style="display:flex;justify-content:space-between;margin-top:2px"><span style="font-size:7.5px;color:rgba(255,255,255,.38)">₹30 entry</span><span style="font-size:7.5px;color:var(--grn);font-weight:700">● LIVE</span></div></div>
+          <div style="background:rgba(255,255,255,.05);border-radius:7px;padding:6px"><div style="font-size:8.5px;font-weight:700">🎯 Squad Wars #8</div><div style="display:flex;justify-content:space-between;margin-top:2px"><span style="font-size:7.5px;color:rgba(255,255,255,.38)">₹50 entry</span><span style="font-size:7.5px;color:var(--r);font-weight:700">● Soon</span></div></div>
+        </div>
+        <div class="ss-lbl">Home Screen</div>
+      </div>
+
+      <!-- S2 Tournament -->
+      <div class="ss-card bg-s2" onclick="openSS('🏆 Tournament Detail')">
+        <div class="ss-num">2/6</div>
+        <div class="sm">
+          <div class="sm-bar"><div style="font-size:8.5px;color:var(--r);font-weight:700">← Solo Blitz #24</div></div>
+          <div class="sm-card" style="background:linear-gradient(135deg,rgba(0,18,46,.8),rgba(0,28,65,.5));border:1px solid rgba(26,110,255,.18)">
+            <div style="font-family:var(--fh);font-size:13px;font-weight:700">⚡ Solo Blitz #24</div>
+            <div style="font-size:8px;color:rgba(255,255,255,.38);margin-top:1px">Bermuda · BR · 48 Players</div>
+            <div style="display:flex;gap:4px;margin-top:5px"><span style="background:rgba(0,217,106,.14);color:var(--grn);border-radius:4px;padding:1px 6px;font-size:7.5px;font-weight:700">ONGOING</span><span style="background:rgba(212,160,18,.11);color:var(--gold);border-radius:4px;padding:1px 6px;font-size:7.5px;font-weight:700">VIP</span></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
+            <div style="background:rgba(255,255,255,.06);border-radius:7px;padding:6px;text-align:center"><div style="font-family:var(--fh);font-size:15px;font-weight:700;color:var(--r)">₹30</div><div style="font-size:7.5px;color:rgba(255,255,255,.32)">Entry</div></div>
+            <div style="background:rgba(255,255,255,.06);border-radius:7px;padding:6px;text-align:center"><div style="font-family:var(--fh);font-size:15px;font-weight:700;color:var(--gold)">₹1000</div><div style="font-size:7.5px;color:rgba(255,255,255,.32)">Prize</div></div>
+            <div style="background:rgba(255,255,255,.06);border-radius:7px;padding:6px;text-align:center"><div style="font-family:var(--fh);font-size:15px;font-weight:700;color:var(--grn)">₹35</div><div style="font-size:7.5px;color:rgba(255,255,255,.32)">Per Kill</div></div>
+            <div style="background:rgba(255,255,255,.06);border-radius:7px;padding:6px;text-align:center"><div style="font-family:var(--fh);font-size:15px;font-weight:700">38/48</div><div style="font-size:7.5px;color:rgba(255,255,255,.32)">Slots</div></div>
+          </div>
+          <div class="sm-btn" style="background:var(--r)">🎮 JOIN TOURNAMENT</div>
+        </div>
+        <div class="ss-lbl">Tournament Detail</div>
+      </div>
+
+      <!-- S3 Wallet -->
+      <div class="ss-card bg-s3" onclick="openSS('💰 Wallet')">
+        <div class="ss-num">3/6</div>
+        <div class="sm">
+          <div style="font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:5px">💰 My Wallet</div>
+          <div style="background:linear-gradient(135deg,rgba(0,90,0,.2),rgba(0,46,0,.1));border:1px solid rgba(0,217,106,.18);border-radius:9px;padding:10px;margin-bottom:6px;text-align:center">
+            <div style="font-size:8px;color:rgba(255,255,255,.38)">Total Balance</div>
+            <div style="font-family:var(--fh);font-size:24px;font-weight:700;color:var(--grn)">₹ 850.00</div>
+            <div style="font-size:8px;color:rgba(0,217,106,.6);margin-top:2px">Withdraw anytime</div>
+          </div>
+          <div style="font-size:8.5px;font-weight:700;color:rgba(255,255,255,.38);margin-bottom:4px;text-transform:uppercase;letter-spacing:.8px">Transactions</div>
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border-radius:6px;padding:6px"><div style="width:22px;height:22px;border-radius:6px;background:rgba(0,217,106,.14);display:flex;align-items:center;justify-content:center;font-size:11px">🏆</div><div style="flex:1"><div style="font-size:8.5px;font-weight:700">Tournament Win</div><div style="font-size:7.5px;color:rgba(255,255,255,.3)">Today 3:24 PM</div></div><div style="font-size:10.5px;font-weight:700;color:var(--grn)">+₹500</div></div>
+            <div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border-radius:6px;padding:6px"><div style="width:22px;height:22px;border-radius:6px;background:rgba(232,0,30,.11);display:flex;align-items:center;justify-content:center;font-size:11px">🎮</div><div style="flex:1"><div style="font-size:8.5px;font-weight:700">Entry Fee</div><div style="font-size:7.5px;color:rgba(255,255,255,.3)">Yesterday</div></div><div style="font-size:10.5px;font-weight:700;color:var(--r)">-₹30</div></div>
+          </div>
+        </div>
+        <div class="ss-lbl">Wallet &amp; Transactions</div>
+      </div>
+
+      <!-- S4 Leaderboard -->
+      <div class="ss-card bg-s4" onclick="openSS('🏅 Leaderboard')">
+        <div class="ss-num">4/6</div>
+        <div class="sm">
+          <div style="font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:6px">🏅 Leaderboard</div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <div style="display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,rgba(255,208,0,.09),rgba(255,208,0,.02));border:1px solid rgba(255,208,0,.16);border-radius:7px;padding:6px"><div style="font-family:var(--fh);font-size:16px;color:var(--gold);width:18px">🥇</div><div style="flex:1"><div style="font-size:8.5px;font-weight:700">KingSlayer99</div><div style="font-size:7.5px;color:rgba(255,255,255,.32)">248 Kills · ₹12,500</div></div></div>
+            <div style="display:flex;align-items:center;gap:6px;background:rgba(192,192,192,.07);border-radius:7px;padding:6px"><div style="font-family:var(--fh);font-size:16px;color:#c0c0c0;width:18px">🥈</div><div style="flex:1"><div style="font-size:8.5px;font-weight:700">RajProGamer</div><div style="font-size:7.5px;color:rgba(255,255,255,.32)">221 Kills · ₹8,200</div></div></div>
+            <div style="display:flex;align-items:center;gap:6px;background:rgba(205,127,50,.07);border-radius:7px;padding:6px"><div style="font-family:var(--fh);font-size:16px;color:#cd7f32;width:18px">🥉</div><div style="flex:1"><div style="font-size:8.5px;font-weight:700">FF_Master_01</div><div style="font-size:7.5px;color:rgba(255,255,255,.32)">198 Kills · ₹5,500</div></div></div>
+            <div style="display:flex;align-items:center;gap:6px;background:rgba(232,0,30,.07);border:1px solid rgba(232,0,30,.2);border-radius:7px;padding:6px"><div style="font-family:var(--fh);font-size:13px;color:var(--r);width:18px">#4</div><div style="flex:1"><div style="font-size:8.5px;font-weight:700">You 👆</div><div style="font-size:7.5px;color:var(--grn)">182 Kills</div></div></div>
+          </div>
+        </div>
+        <div class="ss-lbl">Leaderboard</div>
+      </div>
+
+      <!-- S5 Profile -->
+      <div class="ss-card bg-s5" onclick="openSS('👤 Profile')">
+        <div class="ss-num">5/6</div>
+        <div class="sm">
+          <div style="text-align:center;background:linear-gradient(135deg,#0c0c13,#1a0810);border-radius:9px;padding:10px;margin-bottom:5px">
+            <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--r),#FF7040);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:19px;font-weight:700;margin:0 auto 5px">A</div>
+            <div style="font-family:var(--fh);font-size:12px;font-weight:700">Arjun Sharma</div>
+            <div style="font-size:8px;color:rgba(255,255,255,.32)">arjun@rajesports.in</div>
+            <div style="display:inline-block;background:linear-gradient(135deg,var(--gold),#FF9D00);color:#000;font-size:7.5px;font-weight:800;padding:1px 8px;border-radius:8px;margin-top:4px">⭐ VIP</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:5px">
+            <div style="background:rgba(255,255,255,.05);border-radius:6px;padding:5px;text-align:center"><div style="font-family:var(--fh);font-size:14px;font-weight:700;color:var(--r)">32</div><div style="font-size:7.5px;color:rgba(255,255,255,.32)">Matches</div></div>
+            <div style="background:rgba(255,255,255,.05);border-radius:6px;padding:5px;text-align:center"><div style="font-family:var(--fh);font-size:14px;font-weight:700;color:var(--gold)">187</div><div style="font-size:7.5px;color:rgba(255,255,255,.32)">Kills</div></div>
+            <div style="background:rgba(255,255,255,.05);border-radius:6px;padding:5px;text-align:center"><div style="font-family:var(--fh);font-size:12px;font-weight:700;color:var(--grn)">₹4.2K</div><div style="font-size:7.5px;color:rgba(255,255,255,.32)">Earned</div></div>
+          </div>
+          <div style="background:rgba(255,255,255,.05);border-radius:7px;padding:7px;display:flex;justify-content:space-between;align-items:center"><div style="font-size:8.5px;font-weight:700">Referral Code</div><div style="font-family:var(--fh);font-size:10.5px;font-weight:700;color:var(--r);letter-spacing:2px">REFARJ7</div></div>
+        </div>
+        <div class="ss-lbl">Profile Screen</div>
+      </div>
+
+      <!-- S6 Room -->
+      <div class="ss-card bg-s6" onclick="openSS('🔑 Room &amp; Match')">
+        <div class="ss-num">6/6</div>
+        <div class="sm">
+          <div style="font-family:var(--fh);font-size:12px;font-weight:700;margin-bottom:5px">🔑 Match Room</div>
+          <div style="background:linear-gradient(135deg,rgba(120,55,230,.14),rgba(232,0,30,.07));border:1px solid rgba(120,55,230,.22);border-radius:9px;padding:9px;margin-bottom:5px">
+            <div style="font-size:8px;color:rgba(255,255,255,.38);margin-bottom:3px">⚡ Solo Blitz #24 — LIVE</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
+              <div><div style="font-size:7.5px;color:rgba(255,255,255,.32)">ROOM ID</div><div style="font-family:var(--fh);font-size:16px;font-weight:700;color:var(--gold);letter-spacing:2px">4829 17</div></div>
+              <div><div style="font-size:7.5px;color:rgba(255,255,255,.32)">PASSWORD</div><div style="font-family:var(--fh);font-size:16px;font-weight:700;color:var(--r);letter-spacing:2px">RAJ5</div></div>
+            </div>
+          </div>
+          <div style="background:var(--r);border-radius:7px;padding:6px;text-align:center;font-size:8.5px;font-weight:700;margin-bottom:4px">📋 Copy Room ID</div>
+          <div style="font-size:8.5px;color:rgba(255,255,255,.32);text-align:center;margin-bottom:4px">Your Slot: <span style="background:linear-gradient(135deg,#7c3aed,#4f1faf);color:#fff;padding:1px 6px;border-radius:4px;font-weight:700">A-08</span></div>
+          <div style="background:rgba(0,217,106,.09);border-radius:7px;padding:6px;text-align:center;font-size:8.5px;font-weight:700;color:var(--grn)">✅ Registered &amp; Ready!</div>
+        </div>
+        <div class="ss-lbl">Room ID &amp; Password</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ VIDEO ══ -->
+<section class="sec" style="padding-top:0">
+  <h2 class="sec-hd sr">App <span>Preview Video</span></h2>
+  <p class="sec-sd sr">Watch full app walkthrough before downloading</p>
+  <div class="sec-line"></div>
+  <div class="vid-wrap sr">
+    <div class="vid-ph" id="vph">
+      <div class="vid-ov"><div class="vid-ov-t">🎮 Raj Esports — Full App Tour</div><div class="vid-ov-s">Tap play · Hindi + English</div></div>
+      <button class="vid-play" onclick="playVid()">▶</button>
+    </div>
+    <div class="vid-fr" id="vfr"></div>
+  </div>
+  <div class="url-row sr">
+    <input id="ytU" type="text" placeholder="Admin: Paste YouTube URL here (youtu.be/xxxxx)"/>
+    <button onclick="setVid()">Set Video</button>
+  </div>
+  <p class="vid-note">Admin — paste your promo video URL above and click Set Video</p>
+</section>
+
+<!-- ══ REVIEWS ══ -->
+<section class="sec" style="padding-top:0">
+  <h2 class="sec-hd sr">Player <span>Reviews</span></h2>
+  <p class="sec-sd sr">What 1000+ players say about Raj Esports App</p>
+  <div class="sec-line"></div>
+
+  <div class="rat-sum sr">
+    <div class="rat-big">
+      <div class="rat-big-n">4.3</div>
+      <div class="rat-big-st"><i>★</i><i>★</i><i>★</i><i>★</i><i style="opacity:.35">★</i></div>
+      <div class="rat-big-c">Based on 500+ ratings</div>
+    </div>
+    <div class="rat-bars">
+      <div class="rb-row"><div class="rb-l">5</div><div class="rb-tr"><div class="rb-fi" style="width:65%"></div></div><div class="rb-c">65%</div></div>
+      <div class="rb-row"><div class="rb-l">4</div><div class="rb-tr"><div class="rb-fi" style="width:20%"></div></div><div class="rb-c">20%</div></div>
+      <div class="rb-row"><div class="rb-l">3</div><div class="rb-tr"><div class="rb-fi" style="width:9%"></div></div><div class="rb-c">9%</div></div>
+      <div class="rb-row"><div class="rb-l">2</div><div class="rb-tr"><div class="rb-fi" style="width:4%"></div></div><div class="rb-c">4%</div></div>
+      <div class="rb-row"><div class="rb-l">1</div><div class="rb-tr"><div class="rb-fi" style="width:2%"></div></div><div class="rb-c">2%</div></div>
+    </div>
+  </div>
+
+  <div class="rev-g">
+    <div class="rev sr"><div class="rev-top"><div class="rev-av" style="background:linear-gradient(135deg,#e8001e,#ff6b35)">A</div><div><div class="rev-nm">Arjun Verma</div><div class="rev-dt">2 days ago</div><div class="rev-st"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div></div><span class="rev-tag">WINNER ✅</span></div><div class="rev-txt">Bahut acha app hai! Maine kal tournament join kiya aur ₹500 jeeta. UPI payment 5 minute mein aa gaya. Highly recommend karta hoon! 🏆</div><div class="rev-ver">✅ Verified Player</div><div class="rev-lk">👍 42 helpful</div></div>
+    <div class="rev sr"><div class="rev-top"><div class="rev-av" style="background:linear-gradient(135deg,#1a6eff,#00c2ff)">P</div><div><div class="rev-nm">Priya Singh</div><div class="rev-dt">1 week ago</div><div class="rev-st"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div></div><span class="rev-tag">VIP ⭐</span></div><div class="rev-txt">Best tournament app! VIP membership totally worth it. Got exclusive ₹5000 prize pool matches. Admin responds super fast. 5 stars!</div><div class="rev-ver">✅ VIP Member</div><div class="rev-lk">👍 38 helpful</div></div>
+    <div class="rev sr"><div class="rev-top"><div class="rev-av" style="background:linear-gradient(135deg,#7c3aed,#9c4fff)">R</div><div><div class="rev-nm">Rahul FF Pro</div><div class="rev-dt">3 weeks ago</div><div class="rev-st"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div></div></div><div class="rev-txt">Pehle doubt tha but jab ₹300 UPI mein aaya tab sab clear ho gaya. Ab daily kheltha hoon. Room ID bhi app mein instant milta hai! 🎮</div><div class="rev-ver">✅ Verified</div><div class="rev-lk">👍 31 helpful</div></div>
+    <div class="rev sr"><div class="rev-top"><div class="rev-av" style="background:linear-gradient(135deg,#00a854,#00d96a)">S</div><div><div class="rev-nm">Sneha Patel</div><div class="rev-dt">5 days ago</div><div class="rev-st"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div></div></div><div class="rev-txt">Interface bahut clean hai! Squad tournament mein 2nd aaye aur ₹800 mila. Anti-cheat strict hai jo sabke liye fair hai!</div><div class="rev-ver">✅ Verified</div><div class="rev-lk">👍 27 helpful</div></div>
+    <div class="rev sr"><div class="rev-top"><div class="rev-av" style="background:linear-gradient(135deg,#d4a012,#ff9d00)">K</div><div><div class="rev-nm">Karan Gamer</div><div class="rev-dt">2 weeks ago</div><div class="rev-st"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div></div><span class="rev-tag">TOP PLAYER</span></div><div class="rev-txt">Leaderboard feature ekdum fire hai! Per-kill bonus se ₹2,200 last month kamaya. Download karo bhai sab log! 🔥</div><div class="rev-ver">✅ Top Player</div><div class="rev-lk">👍 58 helpful</div></div>
+    <div class="rev sr"><div class="rev-top"><div class="rev-av" style="background:linear-gradient(135deg,#e8001e,#7c3aed)">M</div><div><div class="rev-nm">Mohammad Ali</div><div class="rev-dt">1 month ago</div><div class="rev-st"><i>★</i><i>★</i><i>★</i><i>★</i><i style="opacity:.35">★</i></div></div></div><div class="rev-txt">Acha app hai. Peak hours mein thoda slow hota hai but admin jaldi fix karta hai. Support ticket reply 20 min mein aaya. Keep improving!</div><div class="rev-ver">✅ Verified</div><div class="rev-lk">👍 19 helpful</div></div>
+  </div>
+</section>
+
+<!-- ══ HOW TO INSTALL ══ -->
+<section class="sec" style="padding-top:0">
+  <h2 class="sec-hd sr">How to <span>Download &amp; Install</span></h2>
+  <p class="sec-sd sr">Ready in under 2 minutes — super easy!</p>
+  <div class="sec-line"></div>
+  <div class="steps">
+    <div class="step sr"><div class="step-n">1</div><div><div class="step-t">📥 Download APK</div><div class="step-d">Click the Download APK button. File is ~18 MB. Filename: <span style="color:var(--r)">RajEsports.apk</span></div></div></div>
+    <div class="step sr"><div class="step-n">2</div><div><div class="step-t">⚙️ Allow Unknown Sources</div><div class="step-d">Go to Settings → Security → Enable "Install Unknown Apps" when your phone asks.</div><div class="step-code">Settings → Security → Unknown Sources → ON</div></div></div>
+    <div class="step sr"><div class="step-n">3</div><div><div class="step-t">📲 Install the App</div><div class="step-d">Open downloaded APK from your Downloads folder. Tap Install. Done in seconds!</div></div></div>
+    <div class="step sr"><div class="step-n">4</div><div><div class="step-t">🔐 Register Free Account</div><div class="step-d">Open app → Register → Enter Name, Email, Password → Instant account! No verification needed.</div></div></div>
+    <div class="step sr"><div class="step-n">5</div><div><div class="step-t">💰 Add Money &amp; Join</div><div class="step-d">Add wallet balance via UPI/QR. Browse tournaments, pay entry fee, get your slot!</div></div></div>
+    <div class="step sr"><div class="step-n">6</div><div><div class="step-t">🏆 Play &amp; Win Cash!</div><div class="step-d">Win → money in wallet → withdraw to UPI. Minimum ₹50 withdrawal. No hidden fees!</div></div></div>
+  </div>
+</section>
+
+<!-- ══ PERMISSIONS ══ -->
+<section class="sec" style="padding-top:0">
+  <h2 class="sec-hd sr">App <span>Permissions</span></h2>
+  <p class="sec-sd sr">Only what's necessary — your privacy matters</p>
+  <div class="sec-line"></div>
+  <div class="perms">
+    <div class="perm sr"><span>🌐</span>Internet Access</div>
+    <div class="perm sr"><span>🔔</span>Notifications</div>
+    <div class="perm sr"><span>📷</span>Camera (optional)</div>
+    <div class="perm sr"><span>💾</span>Storage</div>
+    <div class="perm sr"><span>📳</span>Vibration</div>
+    <div class="perm sr"><span>🔋</span>Wake Lock</div>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section class="sec" style="padding-top:0">
+  <h2 class="sec-hd sr">Frequently Asked <span>Questions</span></h2>
+  <div class="sec-line"></div>
+  <div class="faq">
+    <div class="fq sr"><div class="fq-q" onclick="togFQ(this)">Is this app 100% safe to download?<span class="fq-ar">▼</span></div><div class="fq-a">Yes, completely safe. Virus-free APK trusted by 1000+ players. Scan with any antivirus if you want. All payments via official UPI only.</div></div>
+    <div class="fq sr"><div class="fq-q" onclick="togFQ(this)">Do I actually receive real money?<span class="fq-ar">▼</span></div><div class="fq-a">YES! We've paid ₹50,000+ in real prizes. UPI/IMPS directly to your bank. Check our WhatsApp group for payment proofs!</div></div>
+    <div class="fq sr"><div class="fq-q" onclick="togFQ(this)">Which Android phones work?<span class="fq-ar">▼</span></div><div class="fq-a">Any Android 5.0+ phone. Minimum 2GB RAM recommended. iPhone (iOS) version coming soon!</div></div>
+    <div class="fq sr"><div class="fq-q" onclick="togFQ(this)">How do I get Room ID for my match?<span class="fq-ar">▼</span></div><div class="fq-a">When match time comes, Room ID &amp; Password appear directly in the app under Ongoing tab. You'll also get a notification!</div></div>
+    <div class="fq sr"><div class="fq-q" onclick="togFQ(this)">Minimum withdrawal amount?<span class="fq-ar">▼</span></div><div class="fq-a">Minimum ₹50 withdrawal. No maximum. Processed 7 days a week, usually within 30 minutes.</div></div>
+    <div class="fq sr"><div class="fq-q" onclick="togFQ(this)">Are emulators allowed?<span class="fq-ar">▼</span></div><div class="fq-a">NO. Emulators are STRICTLY BANNED. Genuine Android phones only. Emulator = permanent ban, no appeal.</div></div>
+    <div class="fq sr"><div class="fq-q" onclick="togFQ(this)">How does referral work?<span class="fq-ar">▼</span></div><div class="fq-a">Share your referral code → friend registers → you get ₹2 instantly! No limit on referrals. Unlimited earning!</div></div>
+  </div>
+</section>
+
+<!-- ══ TERMS ══ -->
+<section class="sec" style="padding-top:0">
+  <h2 class="sec-hd sr"><span>Terms</span> &amp; Conditions</h2>
+  <div class="sec-line"></div>
+  <div class="terms sr">
+    <p style="font-weight:700;color:rgba(255,255,255,.75);margin-bottom:9px">📋 Official Terms — Please Read</p>
+    <p>• Raj Esports is a skill-based gaming platform for Free Fire players aged 18 and above only.</p>
+    <p>• Entry fees are non-refundable after tournament starts. Refunds only for admin-cancelled events.</p>
+    <p>• Cheating, hacking, or any external software = immediate permanent ban, no exceptions.</p>
+    <p>• Emulators are strictly NOT allowed. Genuine Android device required.</p>
+    <p>• Minimum Free Fire account Level 30 required to join any tournament.</p>
+    <p>• Admin decisions on match results, prizes and disputes are final and cannot be appealed.</p>
+    <p>• Raj Esports is NOT affiliated with Garena Free Fire™. Free Fire is a trademark of Garena Online Pte. Ltd.</p>
+    <p>• By downloading and using this app, you agree to all terms listed above.</p>
+    <p style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.25)">© 2025 Raj Esports Tournament. All Rights Reserved. <strong style="color:rgba(232,0,30,.55)">⚠️ Copyright Raj Esports 2025 — Unauthorized redistribution of this APK is strictly prohibited and will result in legal action.</strong></p>
+  </div>
+</section>
+
+<!-- ══ DOWNLOAD CTA ══ -->
+<section id="cta">
+  <div class="cta-in">
+    <h2 class="cta-t sr">Ready to Win <span style="color:var(--r)">Real Cash?</span> 🏆</h2>
+    <p class="cta-s sr">Join 1000+ players already competing daily on Raj Esports — Download free and start winning today!</p>
+    <div class="cta-btns sr">
+      <a class="cta-apk" href="YOUR_APK_DIRECT_DOWNLOAD_LINK_HERE" id="ctaDL" onclick="apkClick(event)">
+        <span style="font-size:22px">📥</span>
+        <div style="text-align:left">
+          <div style="font-size:9.5px;opacity:.78">FREE · 18 MB · Android 5.0+</div>
+          <div style="font-size:17px;font-weight:900;line-height:1.08">Download APK</div>
+        </div>
+      </a>
+      <a class="cta-web" href="index.html">
+        <span style="font-size:20px">🌐</span>
+        <div style="text-align:left">
+          <div style="font-size:9.5px;opacity:.65">No Install Needed</div>
+          <div style="font-size:15px;font-weight:800;line-height:1.08">Open Web App</div>
+        </div>
+      </a>
+    </div>
+    <p class="cta-note">🛡️ Safe · Virus Free · Real UPI Payments · Trusted by Players</p>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="ft-wrap">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <div class="ft-brand-logo">
+          <div class="ft-brand-ico"><img src="logo.png" alt="R" onerror="this.style.display='none';this.parentElement.textContent='R'"/></div>
+          <div><div class="ft-brand-name">Raj Esports</div><div style="font-size:8.5px;color:rgba(232,0,30,.8);letter-spacing:1.5px;text-transform:uppercase">Tournament Platform</div></div>
+        </div>
+        <div class="ft-brand-desc">India's Best Free Fire Tournament App. Win real cash, compete with top players. Trusted by 1000+ players nationwide.</div>
+      </div>
+      <div class="ft-col">
+        <h4>App</h4>
+        <a href="YOUR_APK_DIRECT_DOWNLOAD_LINK_HERE" onclick="apkClick(event)">📥 Download APK</a>
+        <a href="index.html">🌐 Web App</a>
+        <a href="admin.html">🛡️ Admin Panel</a>
+      </div>
+      <div class="ft-col">
+        <h4>Support</h4>
+        <a href="#">💬 WhatsApp</a>
+        <a href="#">📺 YouTube</a>
+        <a href="#">🎫 Ticket</a>
+      </div>
+      <div class="ft-col">
+        <h4>Legal</h4>
+        <a href="#">📋 Terms</a>
+        <a href="#">🔒 Privacy</a>
+        <a href="#">⚖️ Disclaimer</a>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <div class="ft-copy">© 2025 <strong>Raj Esports Tournament</strong>. All Rights Reserved.<br/>⚠️ Not affiliated with Garena Free Fire™.<br/><span style="color:rgba(232,0,30,.45);font-size:9.5px">Unauthorized APK redistribution is a copyright violation.</span></div>
+      <div class="ft-bdgs"><div class="ftbdg">🛡️ Safe APK</div><div class="ftbdg">✅ Verified</div><div class="ftbdg">🔒 Secure Pay</div></div>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /pg -->
+
+<!-- ══ SS MODAL ══ -->
+<div id="ssm">
+  <div id="ssm-box">
+    <button id="ssm-x" onclick="closeSS()">✕</button>
+    <div style="font-size:44px;margin-bottom:9px">📱</div>
+    <div id="ssm-title" style="font-family:var(--fh);font-size:16px;font-weight:700;margin-bottom:6px"></div>
+    <div style="font-size:11.5px;color:rgba(255,255,255,.42);margin-bottom:14px">Download the app to see this screen live!</div>
+    <a href="YOUR_APK_DIRECT_DOWNLOAD_LINK_HERE" onclick="apkClick(event)" style="display:inline-block;background:var(--r);color:var(--w);border-radius:10px;padding:10px 22px;font-size:13px;font-weight:700">📥 Download APK Now</a>
+  </div>
+</div>
+
+<!-- ══ TOAST ══ -->
+<div id="toast"></div>
+
+<script>
+/* ─────────────────────────────────────────────
+   ✅ STEP 1 — PASTE YOUR APK DOWNLOAD LINK HERE
+   
+   HOW TO HOST YOUR APK (FREE OPTIONS):
+   
+   Option A — GitHub Releases (BEST, free, unlimited downloads):
+     1. Go to github.com → Create account → New repo
+     2. Click "Releases" → "Create a new release"
+     3. Upload your .apk file → Publish release
+     4. Right-click the .apk file → Copy link address
+     5. Paste below as APK_URL
+   
+   Option B — Google Drive:
+     1. Upload APK to Google Drive
+     2. Right-click → Share → "Anyone with the link" → Copy
+     3. Change the link from:
+        https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+        to:
+        https://drive.google.com/uc?export=download&id=FILE_ID
+     4. Paste below as APK_URL
+   
+   Option C — Mediafire (easy, free):
+     1. Go to mediafire.com → Upload APK
+     2. Click file → "Copy download link"
+     3. Paste below as APK_URL
+─────────────────────────────────────────────── */
+const APK_URL = 'https://download.mediafire.com/pdt1a4omuu640wc/RAJ+ESPORTS.apk';
+/* ─────────────────────────────────────────────
+   ✅ STEP 2 — Update all download links on page
+─────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('a[href="YOUR_APK_DIRECT_DOWNLOAD_LINK_HERE"]').forEach(function(el) {
+    el.href = APK_URL;
+  });
+});
+
+/* ── APK CLICK — triggers instant download ── */
+function apkClick(e) {
+  if (!APK_URL || APK_URL === 'YOUR_APK_DIRECT_DOWNLOAD_LINK_HERE') {
+    e.preventDefault();
+    toast('⚠️ Admin: Set APK_URL in the script first!', 'err');
+    return;
+  }
+  toast('📥 Download starting...', 'ok');
+  // Force direct download
+  const a = document.createElement('a');
+  a.href = APK_URL;
+  a.download = 'RajEsports.apk';
+  a.target = '_blank';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  e.preventDefault();
+}
+
+function triggerDownload() {
+  if (!APK_URL || APK_URL === 'YOUR_APK_DIRECT_DOWNLOAD_LINK_HERE') {
+    toast('⚠️ Admin: Set APK_URL in the script first!');
+    return;
+  }
+  toast('📥 Download starting...', 'ok');
+  const a = document.createElement('a');
+  a.href = APK_URL;
+  a.download = 'RajEsports.apk';
+  a.target = '_blank';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+/* ── PRELOADER ── */
+(function(){
+  const s=[6,20,38,56,74,90,100],t=[0,250,560,880,1200,1560,1950];
+  const f=document.getElementById('pp'),p=document.getElementById('ppt');
+  t.forEach((ms,i)=>setTimeout(()=>{if(f)f.style.width=s[i]+'%';if(p)p.textContent=s[i]+'%';},ms));
+  setTimeout(()=>{const el=document.getElementById('pl');if(el){el.classList.add('hide');setTimeout(()=>el.remove(),700);}},2300);
+})();
+
+/* ── SCROLL REVEAL ── */
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');}),{threshold:.1});
+document.querySelectorAll('.sr').forEach(el=>obs.observe(el));
+
+/* ── PC MODE ── */
+let pc=false;
+function togPC(){
+  pc=!pc;
+  document.body.classList.toggle('pc',pc);
+  document.getElementById('pcIco').textContent=pc?'📱':'🖥️';
+  document.getElementById('pcLbl').textContent=pc?'Mobile View':'PC View';
+  toast(pc?'🖥️ PC View ON — Layout expanded!':'📱 Mobile View ON','ok');
+}
+
+/* ── SCROLL ── */
+function scrollCTA(){document.getElementById('cta').scrollIntoView({behavior:'smooth'});}
+
+/* ── FAQ ── */
+function togFQ(el){
+  const it=el.parentElement;
+  const was=it.classList.contains('op');
+  document.querySelectorAll('.fq.op').forEach(x=>x.classList.remove('op'));
+  if(!was)it.classList.add('op');
+}
+
+/* ── SS MODAL ── */
+function openSS(l){document.getElementById('ssm-title').textContent=l;document.getElementById('ssm').classList.add('on');}
+function closeSS(){document.getElementById('ssm').classList.remove('on');}
+document.getElementById('ssm').addEventListener('click',e=>{if(e.target===document.getElementById('ssm'))closeSS();});
+
+/* ── VIDEO ── */
+function playVid(){
+  const u=document.getElementById('ytU').value.trim();
+  if(u){setVid();}else{toast('Admin: Paste YouTube URL in the box below and click Set Video 👇');}
+}
+function setVid(){
+  const u=document.getElementById('ytU').value.trim();
+  if(!u){toast('YouTube URL daalo pehle!');return;}
+  const m=u.match(/(?:youtu\.be\/|[?&]v=|embed\/)([a-zA-Z0-9_-]{11})/);
+  if(!m){toast('Invalid YouTube URL — use youtu.be/xxxxx format');return;}
+  document.getElementById('vph').style.display='none';
+  const fr=document.getElementById('vfr');fr.style.display='block';
+  fr.innerHTML=`<iframe src="https://www.youtube.com/embed/${m[1]}?autoplay=1&rel=0" width="100%" height="100%" allowfullscreen allow="autoplay; encrypted-media"></iframe>`;
+  toast('✅ Video set successfully!','ok');
+}
+
+/* ── TOAST ── */
+function toast(msg,type=''){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.className='on'+(type?' '+type:'');
+  clearTimeout(window._toastT);
+  window._toastT=setTimeout(()=>el.className='',3400);
+}
+</script>
+</body>
+</html>
